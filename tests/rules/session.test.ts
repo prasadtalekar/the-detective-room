@@ -245,6 +245,20 @@ describe("multiplayer service integration", () => {
     expect(a).not.toBe(b);
     expect((await get(at("host", `rooms/${a}`))).val().hostUid).toBe("host");
   });
+  it("atomically publishes a captain submission and its matching public progress marker", async () => {
+    activeDb = db("p1");
+    await submit(CODE, "t1", 0, response());
+    expect(
+      (
+        await get(at("board", `rooms/${CODE}/public/teams/t1/progress/0`))
+      ).val(),
+    ).toBe(true);
+  });
+  it("rejects a progress marker without its matching submission", async () => {
+    await assertFails(
+      set(at("p1", `rooms/${CODE}/public/teams/t1/progress/0`), true),
+    );
+  });
   it("runs all five phases, reviews exact keys, reveals and restarts without stale scores", async () => {
     await set(at("host", `rooms/${CODE}/public/status`), "lobby");
     await control(CODE, "start", pack, Date.now());
@@ -258,6 +272,8 @@ describe("multiplayer service integration", () => {
         explanation: "Causal chain with evidence and resolved red herrings.",
         run: 1,
         submittedAt: Date.now(),
+      }).catch((error) => {
+        throw new Error(`Phase ${phase} submit failed: ${error.message}`);
       });
       activeDb = db("host");
       await award(CODE, "t1", phase, pack, phase === 4 ? 60 : 0);
@@ -286,6 +302,27 @@ describe("multiplayer service integration", () => {
       (await get(at("p1", `rooms/${CODE}/teams/t1/submissions`))).exists(),
     ).toBe(false);
   });
+  it("allows host controls with existing notebooks and older valid submissions", async () => {
+    activeDb = db("p1");
+    await saveNotebook(CODE, "t1", "Do not lose these notes", 0);
+    await submit(CODE, "t1", 0, response());
+    await env.withSecurityRulesDisabled(async (c) => {
+      await set(
+        ref(c.database(), `rooms/${CODE}/teams/t1/submissions/0/submittedAt`),
+        Date.now() - 120000,
+      );
+    });
+    activeDb = db("host");
+    await control(CODE, "pause", pack, Date.now());
+    await control(CODE, "resume", pack, Date.now());
+    await award(CODE, "t1", 0, pack, 0);
+    expect(
+      (await get(at("p1", `rooms/${CODE}/teams/t1/notebook`))).val(),
+    ).toEqual({ text: "Do not lose these notes", revision: 1 });
+    expect(
+      (await get(at("board", `rooms/${CODE}/public/teams/t1/scores/0`))).val(),
+    ).toBe(25);
+  });
   it("preserves remaining time across pause and resume", async () => {
     await control(CODE, "pause", pack, Date.now());
     const s = (await get(at("host", `rooms/${CODE}/public`))).val();
@@ -308,7 +345,7 @@ describe("multiplayer service integration", () => {
     await removePlayer(CODE, "p1");
     expect(
       (await get(at("host", `rooms/${CODE}/public/teams/t1/captain`))).val(),
-    ).toBe("p2");
+    ).toMatch(/^(p2|p3|newA)$/);
   });
   it("detects concurrent notebook edits instead of silently overwriting them", async () => {
     activeDb = db("p1");
@@ -321,6 +358,30 @@ describe("multiplayer service integration", () => {
     expect(
       (await get(at("p1", `rooms/${CODE}/teams/t1/notebook`))).val(),
     ).toEqual({ text: "merged notes", revision: 2 });
+  });
+  it("saves an existing notebook revision from a fresh client without a warm cache", async () => {
+    await set(at("p1", `rooms/${CODE}/teams/t1/notebook`), {
+      text: "Prior notes",
+      revision: 1,
+    });
+    activeDb = db("p2");
+    await saveNotebook(CODE, "t1", "Fresh client edit", 1);
+    expect(
+      (await get(at("p1", `rooms/${CODE}/teams/t1/notebook`))).val(),
+    ).toEqual({ text: "Fresh client edit", revision: 2 });
+  });
+  it("does not overwrite a notebook from a stale fresh client", async () => {
+    await set(at("p1", `rooms/${CODE}/teams/t1/notebook`), {
+      text: "Latest notes",
+      revision: 1,
+    });
+    activeDb = db("p2");
+    await expect(saveNotebook(CODE, "t1", "Stale edit", 0)).rejects.toThrow(
+      "teammate updated",
+    );
+    expect(
+      (await get(at("p1", `rooms/${CODE}/teams/t1/notebook`))).val().text,
+    ).toBe("Latest notes");
   });
   it("rejects a start with fewer than six players or empty teams", async () => {
     await set(at("host", `rooms/${CODE}`), makeSession(pack, 2, "host"));

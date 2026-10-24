@@ -5,6 +5,8 @@ import {
   set,
   update,
   onDisconnect,
+  onValue,
+  type DatabaseReference,
 } from "firebase/database";
 import { createFirebaseClient } from "./firebase";
 import {
@@ -60,11 +62,28 @@ export async function createRoom(uid: string, pack: CasePack, teams: number) {
   }
   throw new Error("Could not reserve a game code. Try again.");
 }
+/** Keep a listener alive so the transaction's initial value has been loaded.
+ * Returning undefined from an initially empty SDK cache aborts a transaction;
+ * it does not ask Firebase to fetch the actual room and retry.
+ */
+async function loadedTransaction<T>(
+  location: DatabaseReference,
+  change: (current: T | null) => T | null | undefined,
+) {
+  let unsubscribe = () => {};
+  try {
+    await new Promise<void>((resolve, reject) => {
+      unsubscribe = onValue(location, () => resolve(), reject);
+    });
+    return await runTransaction(location, change, { applyLocally: false });
+  } finally {
+    unsubscribe();
+  }
+}
 async function changeRoom(code: string, change: (room: Room) => Room) {
-  const result = await runTransaction(
+  const result = await loadedTransaction<Room>(
     path(`rooms/${roomCode(code)}`),
-    (room: Room | null) => (room ? change(room) : undefined),
-    { applyLocally: false },
+    (room) => (room ? change(room) : undefined),
   );
   if (!result.committed)
     throw new Error("Game unavailable or concurrent update rejected.");
@@ -225,13 +244,12 @@ export async function saveNotebook(
 ) {
   if (text.length > 8000)
     throw new Error("Notes must be at most 8,000 characters.");
-  const result = await runTransaction(
+  const result = await loadedTransaction<{ text: string; revision: number }>(
     path(`rooms/${code}/teams/${teamId}/notebook`),
     (current) => {
       if ((current?.revision ?? 0) !== revision) return;
       return { text, revision: revision + 1 };
     },
-    { applyLocally: false },
   );
   if (!result.committed)
     throw new Error(

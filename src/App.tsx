@@ -955,6 +955,7 @@ function HostReview({
         <label>
           Review phase
           <select
+            aria-label="Review phase"
             value={phase}
             onChange={(e) => setPhase(Number(e.target.value))}
           >
@@ -1301,6 +1302,7 @@ export function Notebook({
       <label>
         {title}
         <textarea
+          aria-label={title}
           rows={8}
           maxLength={8000}
           value={draft?.text ?? text}
@@ -1471,6 +1473,7 @@ export function AnswerForm({
                 <label key={q.id}>
                   {q.prompt}
                   <select
+                    aria-label={q.prompt}
                     required
                     value={answers[q.id] ?? ""}
                     onChange={(e) => {
@@ -1493,6 +1496,11 @@ export function AnswerForm({
                 ? "Logical explanation — cite evidence and resolve red herrings (60 host-reviewed points)"
                 : "Investigation rationale / evidence citations"}
               <textarea
+                aria-label={
+                  session.phase === 4
+                    ? "Logical explanation — cite evidence and resolve red herrings (60 host-reviewed points)"
+                    : "Investigation rationale / evidence citations"
+                }
                 rows={5}
                 maxLength={4000}
                 required={session.phase === 4}

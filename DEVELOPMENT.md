@@ -33,6 +33,26 @@ TLS checks remain enabled. Cache and CLI configuration go in ignored `.firebase/
 Each cloud task is isolated: use the existing checkout; do not create a worktree
 unless explicitly requested.
 
+## Windows PowerShell
+
+Use `npm.cmd` / `npx.cmd` if PowerShell blocks the `.ps1` launchers. Do not change
+execution policy just to run npm. For a local emulator game, start
+`npm.cmd run emulators` in one terminal; in a second terminal run:
+
+```powershell
+npm.cmd run seed:emulator
+$env:VITE_USE_FIREBASE_EMULATORS="true"
+npm.cmd run dev
+```
+
+Stop the regular emulator process before `npm.cmd run test:rules` or
+`npm.cmd run test:e2e`; those commands start their own emulators on port 9000.
+For browser tests install Chromium once with `npx.cmd playwright install chromium`.
+The Playwright server uses its `env` configuration, which works on Windows and Unix.
+Before a production build, explicitly set
+`$env:VITE_USE_FIREBASE_EMULATORS="false"` so an old shell setting cannot override
+`.env.local`.
+
 ## Play a game
 
 1. Host signs in, imports `private/case-packs.json` if the library is not seeded,

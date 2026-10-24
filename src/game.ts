@@ -169,6 +169,7 @@ export function releasePhase(
     if (card.phase <= phase) evidence[card.id] = card;
   return {
     ...session,
+    phase,
     evidence,
     questions: { ...session.questions, [phase]: pack.questions[phase] },
     ...(phase >= 2 ? { witnesses: pack.witnesses } : {}),

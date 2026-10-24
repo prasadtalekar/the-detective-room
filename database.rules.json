@@ -77,7 +77,7 @@
             ".read": "auth != null && root.child('rooms').child($code).child('members').child(auth.uid).child('teamId').val() === $team",
             "notebook": {
               ".write": "auth != null && root.child('rooms').child($code).child('members').child(auth.uid).child('teamId').val() === $team && newData.exists()",
-              ".validate": "newData.hasChildren(['text','revision']) && newData.child('text').isString() && newData.child('text').val().length <= 8000 && newData.child('revision').isNumber() && ((!data.exists() && newData.child('revision').val() === 1) || newData.child('revision').val() === data.child('revision').val() + 1)",
+              ".validate": "newData.hasChildren(['text','revision']) && newData.child('text').isString() && newData.child('text').val().length <= 8000 && newData.child('revision').isNumber() && ((auth != null && root.child('hosts').child(auth.uid).val() === true && root.child('rooms').child($code).child('hostUid').val() === auth.uid) || ((!data.exists() && newData.child('revision').val() === 1) || newData.child('revision').val() === data.child('revision').val() + 1))",
               "text": {},
               "revision": {},
               "$other": {
@@ -100,7 +100,7 @@
                   ".validate": "newData.isNumber()"
                 },
                 "submittedAt": {
-                  ".validate": "newData.isNumber() && newData.val() <= now + 5000 && newData.val() >= now - 60000"
+                  ".validate": "newData.isNumber() && ((auth != null && root.child('hosts').child(auth.uid).val() === true && root.child('rooms').child($code).child('hostUid').val() === auth.uid) || (newData.val() <= now + 5000 && newData.val() >= now - 60000))"
                 },
                 "$other": {
                   ".validate": false

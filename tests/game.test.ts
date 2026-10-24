@@ -77,3 +77,12 @@ it("generates readable cryptographically random six-character codes", () => {
   expect(codes.every((c) => /^[A-HJ-NP-Z2-9]{6}$/.test(c))).toBe(true);
   expect(new Set(codes).size).toBe(100);
 });
+
+it("advances the stored phase together with released evidence and questions", () => {
+  let session = makeSession(cases[0], 2, "host").public;
+  for (let phase = 0; phase < 5; phase++) {
+    session = releasePhase(session, cases[0], phase);
+    expect(session.phase).toBe(phase);
+    expect(session.questions?.[phase]).toEqual(cases[0].questions[phase]);
+  }
+});

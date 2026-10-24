@@ -16,8 +16,8 @@ export default defineConfig({
       : {},
   },
   webServer: {
-    command:
-      "VITE_USE_FIREBASE_EMULATORS=true npm run dev -- --port 5180 --strictPort",
+    command: "npm run dev -- --port 5180 --strictPort",
+    env: { VITE_USE_FIREBASE_EMULATORS: "true" },
     url: "http://127.0.0.1:5180",
     reuseExistingServer: false,
   },
