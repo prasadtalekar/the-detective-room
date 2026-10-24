@@ -1,6 +1,7 @@
 import { test, expect } from "@playwright/test";
 import { execFileSync } from "node:child_process";
 import { readFileSync } from "node:fs";
+import { PHASES } from "../../src/game";
 test("six investigators, two teams and one board complete a live case", async ({
   browser,
 }) => {
@@ -111,6 +112,7 @@ test("six investigators, two teams and one board complete a live case", async ({
     const pack = JSON.parse(readFileSync("private/case-packs.json", "utf8"))[0];
     for (let phase = 0; phase < 5; phase++) {
       const p = players[0];
+      await expect(p.locator(".phasebar h2")).toHaveText(PHASES[phase].name);
       if (phase === 3) {
         // Accessible move controls reconstruct the same order as dragging.
         for (let target = 0; target < 4; target++) {
@@ -156,9 +158,11 @@ test("six investigators, two teams and one board complete a live case", async ({
       await p
         .getByRole("button", { name: "Submit official response", exact: true })
         .click();
-      await expect(p.getByRole("status")).toContainText(
-        "Official team response submitted.",
-      );
+      await expect(
+        p
+          .getByRole("status")
+          .filter({ hasText: "Official team response submitted." }),
+      ).toBeVisible();
       await host
         .getByLabel("Review phase", { exact: true })
         .selectOption(String(phase));
