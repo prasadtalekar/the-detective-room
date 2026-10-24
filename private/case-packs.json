@@ -1,0 +1,1352 @@
+[
+  {
+    "id": "aurora",
+    "title": "The Missing Project Aurora Document",
+    "briefing": "At 10:18, an external recipient received the confidential Aurora launch document. Five employees had authorized read access. Determine who disclosed it, how, and why. All times are office-local; systems were synchronized to within two seconds.",
+    "suspects": [
+      {
+        "id": "s1",
+        "name": "Maya Chen",
+        "role": "Project lead",
+        "profile": "Owned the launch draft and chaired the morning review."
+      },
+      {
+        "id": "s2",
+        "name": "Daniel Brooks",
+        "role": "Commercial manager",
+        "profile": "Negotiated launch partnerships; had a disputed referral payment."
+      },
+      {
+        "id": "s3",
+        "name": "Priya Shah",
+        "role": "Security analyst",
+        "profile": "Audited document access; investigated an alert."
+      },
+      {
+        "id": "s4",
+        "name": "Ethan Cole",
+        "role": "IT engineer",
+        "profile": "Maintained a service account and the print system."
+      },
+      {
+        "id": "s5",
+        "name": "Sofia Reyes",
+        "role": "Research coordinator",
+        "profile": "Prepared slides and booked the review room."
+      }
+    ],
+    "evidence": [
+      {
+        "id": "E01",
+        "title": "Document audit",
+        "type": "Access log",
+        "body": "09:42 Maya read v7 on L-01; 09:51 Daniel downloaded v7 on L-17; 10:04 Priya read v7 on S-02. No other v7 downloads occurred before 10:18.",
+        "phase": 0
+      },
+      {
+        "id": "E02",
+        "title": "Disclosure report",
+        "type": "Message",
+        "body": "At 10:18 receiver northstar-drop@example.test acknowledged Aurora v7, including its confidential pricing appendix. This is a fictional internal exercise address.",
+        "phase": 0
+      },
+      {
+        "id": "E03",
+        "title": "Morning calendar",
+        "type": "Schedule",
+        "body": "Maya and Sofia attended a recorded review from 09:55\u201310:25. Daniel was invited but declined. Ethan had a maintenance window at 10:00.",
+        "phase": 0
+      },
+      {
+        "id": "E04",
+        "title": "Access holders",
+        "type": "Policy",
+        "body": "All five suspects could read Aurora. External transfer required separate approval. No external transfer was approved that morning.",
+        "phase": 0
+      },
+      {
+        "id": "E05",
+        "title": "Transfer gateway",
+        "type": "Transfer log",
+        "body": "10:12 L-17 uploaded aurora-v7.pdf to the external Northstar drop. Device certificate D-17 authenticated the transfer. Digest matched the disclosed file.",
+        "phase": 1
+      },
+      {
+        "id": "E06",
+        "title": "Device inventory",
+        "type": "Asset record",
+        "body": "L-17 and non-exportable device certificate D-17 were assigned to Daniel. L-17 could not be accessed remotely during the incident; remote desktop was disabled.",
+        "phase": 1
+      },
+      {
+        "id": "E07",
+        "title": "Service account",
+        "type": "Login history",
+        "body": "Ethan\u2019s service account printed a diagnostic cover sheet at 10:01 on P-04. It had no permission to read or transfer Aurora; no document payload was printed.",
+        "phase": 1
+      },
+      {
+        "id": "E08",
+        "title": "Referral message",
+        "type": "Message",
+        "body": "At 09:35 Daniel messaged Northstar: \u201cThe launch pricing appendix will settle my referral payment.\u201d Finance confirms a disputed personal referral fee.",
+        "phase": 1
+      },
+      {
+        "id": "E09",
+        "title": "Reception testimony",
+        "type": "Witness",
+        "body": "Receptionist Lena saw Daniel carrying L-17 into the east booth at 10:07. She recognized his name badge and spoke to him about a parcel.",
+        "phase": 2
+      },
+      {
+        "id": "E10",
+        "title": "Security testimony",
+        "type": "Witness",
+        "body": "Priya opened v7 at 10:04 to compare its watermark after a transfer-preparation alert. Her workstation remained on the security VLAN; gateway records show no outbound document from S-02.",
+        "phase": 2
+      },
+      {
+        "id": "E11",
+        "title": "CCTV sequence",
+        "type": "CCTV",
+        "body": "10:06 Daniel leaves the lobby, enters the east booth at 10:07, exits 10:14 holding L-17. The booth had one entrance and no other visitor during that interval.",
+        "phase": 3
+      },
+      {
+        "id": "E12",
+        "title": "Contradictory alibi",
+        "type": "Interview",
+        "body": "Daniel claimed he was with reception continuously from 10:00\u201310:20. Parcel and CCTV records put him away from reception during the transfer. Meeting recording places Maya and Sofia in the review; Ethan\u2019s console log and camera place him at P-04.",
+        "phase": 3
+      }
+    ],
+    "questions": {
+      "0": [
+        {
+          "id": "p0q1",
+          "prompt": "Which version was disclosed?",
+          "options": [
+            "v6",
+            "v7",
+            "Draft slides"
+          ]
+        },
+        {
+          "id": "p0q2",
+          "prompt": "Who downloaded v7 before the incident?",
+          "options": [
+            "Daniel Brooks",
+            "Ethan Cole",
+            "Sofia Reyes"
+          ]
+        },
+        {
+          "id": "p0q3",
+          "prompt": "Was an external transfer authorized?",
+          "options": [
+            "Yes",
+            "No"
+          ]
+        },
+        {
+          "id": "p0q4",
+          "prompt": "Which event was recorded?",
+          "options": [
+            "Morning review",
+            "Referral call",
+            "Maintenance briefing"
+          ]
+        }
+      ],
+      "1": [
+        {
+          "id": "p1q1",
+          "prompt": "Which device sent the disclosed file?",
+          "options": [
+            "L-17",
+            "S-02",
+            "P-04"
+          ]
+        },
+        {
+          "id": "p1q2",
+          "prompt": "What ties the transfer to the disclosed document?",
+          "options": [
+            "Matching file digest",
+            "Filename alone",
+            "Calendar invitation"
+          ]
+        },
+        {
+          "id": "p1q3",
+          "prompt": "What does the service-account activity establish?",
+          "options": [
+            "Diagnostic print only",
+            "Aurora disclosure",
+            "A remote login to L-17"
+          ]
+        }
+      ],
+      "2": [
+        {
+          "id": "p2q1",
+          "prompt": "Which alibi contradicts the witness account?",
+          "options": [
+            "Daniel at reception throughout",
+            "Maya in the review",
+            "Ethan at P-04"
+          ]
+        },
+        {
+          "id": "p2q2",
+          "prompt": "Why did Priya read the document?",
+          "options": [
+            "Watermark audit",
+            "Referral payment",
+            "Slide preparation"
+          ]
+        },
+        {
+          "id": "p2q3",
+          "prompt": "Who saw Daniel with L-17?",
+          "options": [
+            "Lena",
+            "Maya",
+            "Sofia"
+          ]
+        }
+      ],
+      "3": [
+        {
+          "id": "slot1",
+          "prompt": "Timeline position 1",
+          "options": [
+            "event1",
+            "event2",
+            "event3",
+            "event4"
+          ]
+        },
+        {
+          "id": "slot2",
+          "prompt": "Timeline position 2",
+          "options": [
+            "event1",
+            "event2",
+            "event3",
+            "event4"
+          ]
+        },
+        {
+          "id": "slot3",
+          "prompt": "Timeline position 3",
+          "options": [
+            "event1",
+            "event2",
+            "event3",
+            "event4"
+          ]
+        },
+        {
+          "id": "slot4",
+          "prompt": "Timeline position 4",
+          "options": [
+            "event1",
+            "event2",
+            "event3",
+            "event4"
+          ]
+        }
+      ],
+      "4": [
+        {
+          "id": "p4q1",
+          "prompt": "Responsible suspect",
+          "options": [
+            "Maya Chen",
+            "Daniel Brooks",
+            "Priya Shah",
+            "Ethan Cole",
+            "Sofia Reyes"
+          ]
+        },
+        {
+          "id": "p4q2",
+          "prompt": "Motive",
+          "options": [
+            "Disputed personal referral payment",
+            "Hide a failed print job",
+            "Correct the slides"
+          ]
+        },
+        {
+          "id": "p4q3",
+          "prompt": "Method",
+          "options": [
+            "External upload from L-17 in the east booth",
+            "Service-account printout",
+            "Forward from S-02"
+          ]
+        },
+        {
+          "id": "p4q4",
+          "prompt": "Decisive supporting evidence",
+          "options": [
+            "Matching digest and D-17 transfer, with CCTV placing Daniel at L-17",
+            "Calendar invitation alone",
+            "Priya\u2019s read alone"
+          ]
+        }
+      ]
+    },
+    "key": {
+      "0": [
+        {
+          "id": "p0q1",
+          "answer": "v7",
+          "points": 25
+        },
+        {
+          "id": "p0q2",
+          "answer": "Daniel Brooks",
+          "points": 25
+        },
+        {
+          "id": "p0q3",
+          "answer": "No",
+          "points": 25
+        },
+        {
+          "id": "p0q4",
+          "answer": "Morning review",
+          "points": 25
+        }
+      ],
+      "1": [
+        {
+          "id": "p1q1",
+          "answer": "L-17",
+          "points": 50
+        },
+        {
+          "id": "p1q2",
+          "answer": "Matching file digest",
+          "points": 50
+        },
+        {
+          "id": "p1q3",
+          "answer": "Diagnostic print only",
+          "points": 50
+        }
+      ],
+      "2": [
+        {
+          "id": "p2q1",
+          "answer": "Daniel at reception throughout",
+          "points": 50
+        },
+        {
+          "id": "p2q2",
+          "answer": "Watermark audit",
+          "points": 50
+        },
+        {
+          "id": "p2q3",
+          "answer": "Lena",
+          "points": 50
+        }
+      ],
+      "3": [
+        {
+          "id": "slot1",
+          "answer": "event1",
+          "points": 50
+        },
+        {
+          "id": "slot2",
+          "answer": "event2",
+          "points": 50
+        },
+        {
+          "id": "slot3",
+          "answer": "event3",
+          "points": 50
+        },
+        {
+          "id": "slot4",
+          "answer": "event4",
+          "points": 50
+        }
+      ],
+      "4": [
+        {
+          "id": "p4q1",
+          "answer": "Daniel Brooks",
+          "points": 100
+        },
+        {
+          "id": "p4q2",
+          "answer": "Disputed personal referral payment",
+          "points": 60
+        },
+        {
+          "id": "p4q3",
+          "answer": "External upload from L-17 in the east booth",
+          "points": 80
+        },
+        {
+          "id": "p4q4",
+          "answer": "Matching digest and D-17 transfer, with CCTV placing Daniel at L-17",
+          "points": 100
+        }
+      ]
+    },
+    "witnesses": [
+      {
+        "name": "Lena \u2014 reception",
+        "exchanges": [
+          {
+            "question": "Who used the east booth?",
+            "response": "Daniel, carrying his laptop. I spoke to him at 10:07."
+          },
+          {
+            "question": "Was he at reception throughout the interval?",
+            "response": "No. He returned after 10:14."
+          }
+        ]
+      },
+      {
+        "name": "Priya Shah",
+        "exchanges": [
+          {
+            "question": "Why open the file?",
+            "response": "To compare the watermark for an alert, not to export it."
+          },
+          {
+            "question": "Could Ethan\u2019s account read it?",
+            "response": "No. The service account only had print-diagnostic permission."
+          }
+        ]
+      }
+    ],
+    "events": [
+      {
+        "id": "event3",
+        "label": "L-17 uploads v7 at 10:12"
+      },
+      {
+        "id": "event1",
+        "label": "Daniel downloads v7 at 09:51"
+      },
+      {
+        "id": "event4",
+        "label": "External recipient acknowledges receipt at 10:18"
+      },
+      {
+        "id": "event2",
+        "label": "Daniel enters the east booth at 10:07"
+      }
+    ],
+    "solution": "Daniel Brooks disclosed Aurora v7 to secure his disputed personal referral payment. He downloaded the document on L-17 at 09:51 and used the east booth to upload it at 10:12. The matching file digest and non-exportable device certificate connect the disclosed file to his laptop; CCTV and Lena place him with that laptop in the booth. His reception alibi is false. Priya\u2019s read was an audit, Ethan\u2019s service activity printed only a diagnostic, and Maya and Sofia were on the recorded review. No accomplice is needed."
+  },
+  {
+    "id": "prototype",
+    "title": "The Vanishing Prototype",
+    "briefing": "A sensor prototype vanished from a locked lab before an 11:00 customer demonstration. The exit alarm never sounded. Investigate the five authorized staff, the decoy parcel, and the movement of the real unit.",
+    "suspects": [
+      {
+        "id": "s1",
+        "name": "Alex Morgan",
+        "role": "Hardware lead",
+        "profile": "Needed the unit for a customer demo."
+      },
+      {
+        "id": "s2",
+        "name": "Nora Patel",
+        "role": "Demo coordinator",
+        "profile": "Faced penalties if the demo exposed inflated performance claims."
+      },
+      {
+        "id": "s3",
+        "name": "Leo Kim",
+        "role": "Lab technician",
+        "profile": "Ran approved calibration."
+      },
+      {
+        "id": "s4",
+        "name": "Iris Bell",
+        "role": "Procurement analyst",
+        "profile": "Handled a supplier return."
+      },
+      {
+        "id": "s5",
+        "name": "Owen Reed",
+        "role": "Facilities engineer",
+        "profile": "Serviced the lab\u2019s ventilation."
+      }
+    ],
+    "evidence": [
+      {
+        "id": "E01",
+        "title": "Inventory",
+        "type": "Asset record",
+        "body": "Prototype serial AUR-9 was verified in locker L2 at 09:00. AUR-9 has a passive RFID tag; the spare enclosure is empty and tagged DUMMY-1.",
+        "phase": 0
+      },
+      {
+        "id": "E02",
+        "title": "Lab access",
+        "type": "Access log",
+        "body": "09:10 Leo enters for calibration; 09:30 Alex enters; 09:40 Nora enters alone; 10:10 Owen enters accompanied by security. Iris never enters.",
+        "phase": 0
+      },
+      {
+        "id": "E03",
+        "title": "Demonstration booking",
+        "type": "Schedule",
+        "body": "Customer demo booked for 11:00. Nora owns the published performance claims. Alex reported discrepancies at 08:50.",
+        "phase": 0
+      },
+      {
+        "id": "E04",
+        "title": "Exit policy",
+        "type": "Policy",
+        "body": "The lab door reader logs AUR-9 when carried across the threshold. It did not log AUR-9 after 09:00. The internal storage hatch does not cross that threshold.",
+        "phase": 0
+      },
+      {
+        "id": "E05",
+        "title": "Locker audit",
+        "type": "Access log",
+        "body": "09:43 Nora\u2019s unique badge opened L2. At 09:45 the adjacent internal storage hatch was opened using the same badge.",
+        "phase": 1
+      },
+      {
+        "id": "E06",
+        "title": "Return parcel",
+        "type": "Transfer log",
+        "body": "Iris dispatched a supplier box at 09:55. Packing scan shows only DUMMY-1 and return screws. Carrier weighing and the photographed seal match the empty enclosure.",
+        "phase": 1
+      },
+      {
+        "id": "E07",
+        "title": "Internal RFID",
+        "type": "Sensor log",
+        "body": "AUR-9 detected in storage compartment C at 09:46, then remained there. Compartment C is reachable only through the internal hatch; no corridor entrance exists.",
+        "phase": 1
+      },
+      {
+        "id": "E08",
+        "title": "Private message",
+        "type": "Message",
+        "body": "09:05 Nora to a colleague: \u201cA no-show buys time; a live demo proves I inflated the range. I need it unavailable until tomorrow.\u201d",
+        "phase": 1
+      },
+      {
+        "id": "E09",
+        "title": "Technician testimony",
+        "type": "Witness",
+        "body": "Leo verified AUR-9 in L2 at 09:25 after calibration and left at 09:26. Security footage confirms his departure.",
+        "phase": 2
+      },
+      {
+        "id": "E10",
+        "title": "Facilities testimony",
+        "type": "Witness",
+        "body": "Owen and security entered at 10:10 for ventilation work. They never opened storage. Security\u2019s continuous body camera confirms this.",
+        "phase": 2
+      },
+      {
+        "id": "E11",
+        "title": "CCTV",
+        "type": "CCTV",
+        "body": "09:40 Nora enters with empty hands, 09:47 leaves with empty hands. At 09:44 the lab camera shows her lifting AUR-9 toward the storage hatch. Alex left at 09:35.",
+        "phase": 3
+      },
+      {
+        "id": "E12",
+        "title": "Recovery",
+        "type": "Inspection",
+        "body": "At 10:40 security opened compartment C and recovered intact AUR-9 beneath a dust cover. Its serial and tag match inventory. No theft through a lab exit occurred.",
+        "phase": 3
+      }
+    ],
+    "questions": {
+      "0": [
+        {
+          "id": "p0q1",
+          "prompt": "Which serial is the real prototype?",
+          "options": [
+            "AUR-9",
+            "DUMMY-1",
+            "L2"
+          ]
+        },
+        {
+          "id": "p0q2",
+          "prompt": "Who owns the performance claims?",
+          "options": [
+            "Nora Patel",
+            "Leo Kim",
+            "Owen Reed"
+          ]
+        },
+        {
+          "id": "p0q3",
+          "prompt": "Did the real unit cross the lab door?",
+          "options": [
+            "Yes",
+            "No"
+          ]
+        },
+        {
+          "id": "p0q4",
+          "prompt": "When was the demo booked?",
+          "options": [
+            "11:00",
+            "09:00",
+            "10:10"
+          ]
+        }
+      ],
+      "1": [
+        {
+          "id": "p1q1",
+          "prompt": "Where does RFID locate AUR-9?",
+          "options": [
+            "Compartment C",
+            "Carrier depot",
+            "Ventilation duct"
+          ]
+        },
+        {
+          "id": "p1q2",
+          "prompt": "Whose badge opened L2 and the hatch?",
+          "options": [
+            "Nora\u2019s",
+            "Iris\u2019s",
+            "Owen\u2019s"
+          ]
+        },
+        {
+          "id": "p1q3",
+          "prompt": "What was in the return parcel?",
+          "options": [
+            "Dummy enclosure and screws",
+            "AUR-9",
+            "Confidential files"
+          ]
+        }
+      ],
+      "2": [
+        {
+          "id": "p2q1",
+          "prompt": "Who verified AUR-9 before Nora arrived?",
+          "options": [
+            "Leo",
+            "Iris",
+            "Owen"
+          ]
+        },
+        {
+          "id": "p2q2",
+          "prompt": "Was Owen unsupervised?",
+          "options": [
+            "Yes",
+            "No"
+          ]
+        },
+        {
+          "id": "p2q3",
+          "prompt": "Where did security recover the unit?",
+          "options": [
+            "Compartment C",
+            "Supplier box",
+            "Reception"
+          ]
+        }
+      ],
+      "3": [
+        {
+          "id": "slot1",
+          "prompt": "Timeline position 1",
+          "options": [
+            "event1",
+            "event2",
+            "event3",
+            "event4"
+          ]
+        },
+        {
+          "id": "slot2",
+          "prompt": "Timeline position 2",
+          "options": [
+            "event1",
+            "event2",
+            "event3",
+            "event4"
+          ]
+        },
+        {
+          "id": "slot3",
+          "prompt": "Timeline position 3",
+          "options": [
+            "event1",
+            "event2",
+            "event3",
+            "event4"
+          ]
+        },
+        {
+          "id": "slot4",
+          "prompt": "Timeline position 4",
+          "options": [
+            "event1",
+            "event2",
+            "event3",
+            "event4"
+          ]
+        }
+      ],
+      "4": [
+        {
+          "id": "p4q1",
+          "prompt": "Responsible suspect",
+          "options": [
+            "Alex Morgan",
+            "Nora Patel",
+            "Leo Kim",
+            "Iris Bell",
+            "Owen Reed"
+          ]
+        },
+        {
+          "id": "p4q2",
+          "prompt": "Motive",
+          "options": [
+            "Postpone exposure of inflated demo claims",
+            "Sell the unit",
+            "Steal return screws"
+          ]
+        },
+        {
+          "id": "p4q3",
+          "prompt": "Method",
+          "options": [
+            "Hide AUR-9 through the internal hatch in compartment C",
+            "Ship AUR-9 in the supplier box",
+            "Carry AUR-9 out the lab door"
+          ]
+        },
+        {
+          "id": "p4q4",
+          "prompt": "Decisive supporting evidence",
+          "options": [
+            "Nora\u2019s badge sequence, movement on CCTV and RFID in C",
+            "No exit alarm alone",
+            "Iris\u2019s parcel alone"
+          ]
+        }
+      ]
+    },
+    "key": {
+      "0": [
+        {
+          "id": "p0q1",
+          "answer": "AUR-9",
+          "points": 25
+        },
+        {
+          "id": "p0q2",
+          "answer": "Nora Patel",
+          "points": 25
+        },
+        {
+          "id": "p0q3",
+          "answer": "No",
+          "points": 25
+        },
+        {
+          "id": "p0q4",
+          "answer": "11:00",
+          "points": 25
+        }
+      ],
+      "1": [
+        {
+          "id": "p1q1",
+          "answer": "Compartment C",
+          "points": 50
+        },
+        {
+          "id": "p1q2",
+          "answer": "Nora\u2019s",
+          "points": 50
+        },
+        {
+          "id": "p1q3",
+          "answer": "Dummy enclosure and screws",
+          "points": 50
+        }
+      ],
+      "2": [
+        {
+          "id": "p2q1",
+          "answer": "Leo",
+          "points": 50
+        },
+        {
+          "id": "p2q2",
+          "answer": "No",
+          "points": 50
+        },
+        {
+          "id": "p2q3",
+          "answer": "Compartment C",
+          "points": 50
+        }
+      ],
+      "3": [
+        {
+          "id": "slot1",
+          "answer": "event1",
+          "points": 50
+        },
+        {
+          "id": "slot2",
+          "answer": "event2",
+          "points": 50
+        },
+        {
+          "id": "slot3",
+          "answer": "event3",
+          "points": 50
+        },
+        {
+          "id": "slot4",
+          "answer": "event4",
+          "points": 50
+        }
+      ],
+      "4": [
+        {
+          "id": "p4q1",
+          "answer": "Nora Patel",
+          "points": 100
+        },
+        {
+          "id": "p4q2",
+          "answer": "Postpone exposure of inflated demo claims",
+          "points": 60
+        },
+        {
+          "id": "p4q3",
+          "answer": "Hide AUR-9 through the internal hatch in compartment C",
+          "points": 80
+        },
+        {
+          "id": "p4q4",
+          "answer": "Nora\u2019s badge sequence, movement on CCTV and RFID in C",
+          "points": 100
+        }
+      ]
+    },
+    "witnesses": [
+      {
+        "name": "Leo Kim",
+        "exchanges": [
+          {
+            "question": "Where did you leave the prototype?",
+            "response": "Locked in L2, verified at 09:25."
+          },
+          {
+            "question": "Did you use the hatch?",
+            "response": "No; calibration was on the lab bench."
+          }
+        ]
+      },
+      {
+        "name": "Security officer",
+        "exchanges": [
+          {
+            "question": "Was Owen alone?",
+            "response": "No. I accompanied him throughout."
+          },
+          {
+            "question": "Where was AUR-9 found?",
+            "response": "Inside compartment C, not in the return parcel."
+          }
+        ]
+      }
+    ],
+    "events": [
+      {
+        "id": "event3",
+        "label": "AUR-9 reaches compartment C at 09:46"
+      },
+      {
+        "id": "event1",
+        "label": "Leo verifies AUR-9 at 09:25"
+      },
+      {
+        "id": "event4",
+        "label": "Security recovers AUR-9 at 10:40"
+      },
+      {
+        "id": "event2",
+        "label": "Nora opens L2 at 09:43"
+      }
+    ],
+    "solution": "Nora Patel hid AUR-9 in internal compartment C to postpone a demo that would expose her inflated range claims. Her badge opened both L2 and the hatch; CCTV records the movement and RFID locates the unit in C at 09:46. Because the unit never crossed the lab door, there was no exit alert. Iris shipped a documented dummy enclosure, Leo left the real unit locked after calibration, Alex departed before the removal, and Owen arrived later under continuous supervision."
+  },
+  {
+    "id": "meeting",
+    "title": "The Impossible Meeting",
+    "briefing": "An apparently unanimous purchasing approval was recorded during a meeting that three invitees say never happened. Identify who fabricated the approval and reconcile the contradictory attendance and audit records.",
+    "suspects": [
+      {
+        "id": "s1",
+        "name": "Grace Lin",
+        "role": "Finance lead",
+        "profile": "Required live consent for a large purchase."
+      },
+      {
+        "id": "s2",
+        "name": "Marcus Vale",
+        "role": "Purchasing manager",
+        "profile": "Was close to losing a personal vendor bonus."
+      },
+      {
+        "id": "s3",
+        "name": "Tessa Ward",
+        "role": "Executive assistant",
+        "profile": "Created the original meeting invitation."
+      },
+      {
+        "id": "s4",
+        "name": "Ben Ortiz",
+        "role": "IT administrator",
+        "profile": "Maintained room equipment."
+      },
+      {
+        "id": "s5",
+        "name": "Amira Khan",
+        "role": "Legal reviewer",
+        "profile": "Was due to review the vendor contract."
+      }
+    ],
+    "evidence": [
+      {
+        "id": "E01",
+        "title": "Approval record",
+        "type": "Document",
+        "body": "Minutes claim all five staff approved the vendor at 14:00 in Cedar. Policy requires live unanimous approval; an invitation or bot transcript is not consent.",
+        "phase": 0
+      },
+      {
+        "id": "E02",
+        "title": "Calendar audit",
+        "type": "Schedule",
+        "body": "Tessa booked Cedar for 14:00. At 13:40 Marcus alone changed the invite to a remote link and removed the room reservation.",
+        "phase": 0
+      },
+      {
+        "id": "E03",
+        "title": "Room access",
+        "type": "Access log",
+        "body": "Cedar was locked for maintenance 13:50\u201314:30. Security logged only Ben and an escort; no purchasing attendees entered.",
+        "phase": 0
+      },
+      {
+        "id": "E04",
+        "title": "Attendance objections",
+        "type": "Message",
+        "body": "Grace, Tessa and Amira independently reported receiving a cancellation notice at 13:41. None joined a call at 14:00.",
+        "phase": 0
+      },
+      {
+        "id": "E05",
+        "title": "Conference audit",
+        "type": "Login history",
+        "body": "At 14:00 only Marcus and the auto-caption bot joined the remote link. The server recorded one human attendee; the bot cannot approve purchases.",
+        "phase": 1
+      },
+      {
+        "id": "E06",
+        "title": "Document history",
+        "type": "File history",
+        "body": "At 14:12 Marcus\u2019s authenticated session created minutes claiming five approvals. No earlier draft or uploaded recording exists. Document history is append-only.",
+        "phase": 1
+      },
+      {
+        "id": "E07",
+        "title": "Notification audit",
+        "type": "Message log",
+        "body": "13:41 Marcus used the organizer controls delegated for this meeting to send cancellation notices to Grace, Tessa and Amira, while retaining his remote link.",
+        "phase": 1
+      },
+      {
+        "id": "E08",
+        "title": "Vendor incentive",
+        "type": "Message",
+        "body": "Marcus was promised a personal vendor bonus if approval arrived that day. Finance had not authorized that bonus. He wrote at 13:35: \u201cNo time for another review.\u201d",
+        "phase": 1
+      },
+      {
+        "id": "E09",
+        "title": "Assistant testimony",
+        "type": "Witness",
+        "body": "Tessa booked the original room but delegated change controls to Marcus at his request. She received cancellation and did not attend.",
+        "phase": 2
+      },
+      {
+        "id": "E10",
+        "title": "IT testimony",
+        "type": "Witness",
+        "body": "Ben performed physical maintenance with an escort. No conference-account impersonation or credential reset took place. Server timestamps are synchronized.",
+        "phase": 2
+      },
+      {
+        "id": "E11",
+        "title": "Submission audit",
+        "type": "Transfer log",
+        "body": "At 14:15 Marcus submitted the new minutes to purchasing as unanimous consent. The server attributed document creation and submission to the same authenticated session.",
+        "phase": 3
+      },
+      {
+        "id": "E12",
+        "title": "Reconciliation",
+        "type": "Audit conclusion",
+        "body": "A caption bot generated only a \u201cmeeting started\u201d marker, not votes or a transcript. The empty room and one-human remote call are compatible; the five approvals in Marcus\u2019s minutes are unsupported.",
+        "phase": 3
+      }
+    ],
+    "questions": {
+      "0": [
+        {
+          "id": "p0q1",
+          "prompt": "What does policy require?",
+          "options": [
+            "Live unanimous approval",
+            "Calendar invitation only",
+            "Bot marker"
+          ]
+        },
+        {
+          "id": "p0q2",
+          "prompt": "Who changed the invitation?",
+          "options": [
+            "Marcus Vale",
+            "Tessa Ward",
+            "Ben Ortiz"
+          ]
+        },
+        {
+          "id": "p0q3",
+          "prompt": "Was Cedar available at 14:00?",
+          "options": [
+            "Yes",
+            "No"
+          ]
+        },
+        {
+          "id": "p0q4",
+          "prompt": "What did three invitees receive?",
+          "options": [
+            "Cancellation notices",
+            "Approval requests",
+            "A recording"
+          ]
+        }
+      ],
+      "1": [
+        {
+          "id": "p1q1",
+          "prompt": "How many human attendees joined remotely?",
+          "options": [
+            "One",
+            "Five",
+            "Zero"
+          ]
+        },
+        {
+          "id": "p1q2",
+          "prompt": "Who authored the minutes?",
+          "options": [
+            "Marcus",
+            "Tessa",
+            "Caption bot"
+          ]
+        },
+        {
+          "id": "p1q3",
+          "prompt": "What created the missing-attendee pattern?",
+          "options": [
+            "Marcus\u2019s cancellation notices",
+            "Clock drift",
+            "A room scanner fault"
+          ]
+        }
+      ],
+      "2": [
+        {
+          "id": "p2q1",
+          "prompt": "Did Tessa consent?",
+          "options": [
+            "Yes",
+            "No"
+          ]
+        },
+        {
+          "id": "p2q2",
+          "prompt": "Who had delegated change controls?",
+          "options": [
+            "Marcus",
+            "Ben",
+            "Amira"
+          ]
+        },
+        {
+          "id": "p2q3",
+          "prompt": "Could the caption bot approve?",
+          "options": [
+            "Yes",
+            "No"
+          ]
+        }
+      ],
+      "3": [
+        {
+          "id": "slot1",
+          "prompt": "Timeline position 1",
+          "options": [
+            "event1",
+            "event2",
+            "event3",
+            "event4"
+          ]
+        },
+        {
+          "id": "slot2",
+          "prompt": "Timeline position 2",
+          "options": [
+            "event1",
+            "event2",
+            "event3",
+            "event4"
+          ]
+        },
+        {
+          "id": "slot3",
+          "prompt": "Timeline position 3",
+          "options": [
+            "event1",
+            "event2",
+            "event3",
+            "event4"
+          ]
+        },
+        {
+          "id": "slot4",
+          "prompt": "Timeline position 4",
+          "options": [
+            "event1",
+            "event2",
+            "event3",
+            "event4"
+          ]
+        }
+      ],
+      "4": [
+        {
+          "id": "p4q1",
+          "prompt": "Responsible suspect",
+          "options": [
+            "Grace Lin",
+            "Marcus Vale",
+            "Tessa Ward",
+            "Ben Ortiz",
+            "Amira Khan"
+          ]
+        },
+        {
+          "id": "p4q2",
+          "prompt": "Motive",
+          "options": [
+            "Obtain a personal vendor bonus before deadline",
+            "Repair Cedar",
+            "Correct the calendar"
+          ]
+        },
+        {
+          "id": "p4q3",
+          "prompt": "Method",
+          "options": [
+            "Cancel attendees and fabricate unanimous minutes after joining alone",
+            "Forge a room access badge",
+            "Use the bot to cast valid votes"
+          ]
+        },
+        {
+          "id": "p4q4",
+          "prompt": "Decisive supporting evidence",
+          "options": [
+            "One-human attendance plus Marcus\u2019s append-only creation and submission audit",
+            "Room booking alone",
+            "Tessa\u2019s original invitation"
+          ]
+        }
+      ]
+    },
+    "key": {
+      "0": [
+        {
+          "id": "p0q1",
+          "answer": "Live unanimous approval",
+          "points": 25
+        },
+        {
+          "id": "p0q2",
+          "answer": "Marcus Vale",
+          "points": 25
+        },
+        {
+          "id": "p0q3",
+          "answer": "No",
+          "points": 25
+        },
+        {
+          "id": "p0q4",
+          "answer": "Cancellation notices",
+          "points": 25
+        }
+      ],
+      "1": [
+        {
+          "id": "p1q1",
+          "answer": "One",
+          "points": 50
+        },
+        {
+          "id": "p1q2",
+          "answer": "Marcus",
+          "points": 50
+        },
+        {
+          "id": "p1q3",
+          "answer": "Marcus\u2019s cancellation notices",
+          "points": 50
+        }
+      ],
+      "2": [
+        {
+          "id": "p2q1",
+          "answer": "No",
+          "points": 50
+        },
+        {
+          "id": "p2q2",
+          "answer": "Marcus",
+          "points": 50
+        },
+        {
+          "id": "p2q3",
+          "answer": "No",
+          "points": 50
+        }
+      ],
+      "3": [
+        {
+          "id": "slot1",
+          "answer": "event1",
+          "points": 50
+        },
+        {
+          "id": "slot2",
+          "answer": "event2",
+          "points": 50
+        },
+        {
+          "id": "slot3",
+          "answer": "event3",
+          "points": 50
+        },
+        {
+          "id": "slot4",
+          "answer": "event4",
+          "points": 50
+        }
+      ],
+      "4": [
+        {
+          "id": "p4q1",
+          "answer": "Marcus Vale",
+          "points": 100
+        },
+        {
+          "id": "p4q2",
+          "answer": "Obtain a personal vendor bonus before deadline",
+          "points": 60
+        },
+        {
+          "id": "p4q3",
+          "answer": "Cancel attendees and fabricate unanimous minutes after joining alone",
+          "points": 80
+        },
+        {
+          "id": "p4q4",
+          "answer": "One-human attendance plus Marcus\u2019s append-only creation and submission audit",
+          "points": 100
+        }
+      ]
+    },
+    "witnesses": [
+      {
+        "name": "Tessa Ward",
+        "exchanges": [
+          {
+            "question": "Did you approve the purchase?",
+            "response": "No. I received cancellation and attended no meeting."
+          },
+          {
+            "question": "Who controlled changes?",
+            "response": "Marcus had delegated organizer controls for that meeting."
+          }
+        ]
+      },
+      {
+        "name": "Ben Ortiz",
+        "exchanges": [
+          {
+            "question": "Was the room occupied by attendees?",
+            "response": "No, only maintenance and security."
+          },
+          {
+            "question": "Could the bot vote?",
+            "response": "No. It records captions; it has no purchasing authority."
+          }
+        ]
+      }
+    ],
+    "events": [
+      {
+        "id": "event3",
+        "label": "Marcus joins alone at 14:00"
+      },
+      {
+        "id": "event1",
+        "label": "Marcus changes the invitation at 13:40"
+      },
+      {
+        "id": "event4",
+        "label": "Marcus submits fabricated minutes at 14:15"
+      },
+      {
+        "id": "event2",
+        "label": "Cancellation notices sent at 13:41"
+      }
+    ],
+    "solution": "Marcus Vale fabricated unanimous purchasing approval to obtain a personal vendor bonus before its deadline. He redirected the invitation, cancelled other attendees, joined alone, then authored and submitted false minutes. Server attendance, notification records and append-only document history resolve the apparent impossibility: the original room was empty and the remote meeting had one human. Tessa merely created the original invitation; Ben\u2019s maintenance explains the locked room, and Grace and Amira never consented. The caption bot supplied no votes."
+  }
+]

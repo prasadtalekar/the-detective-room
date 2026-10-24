@@ -5,3 +5,5 @@ dist/
 .firebase/
 *-debug.log
 *.tsbuildinfo
+playwright-report/
+test-results/

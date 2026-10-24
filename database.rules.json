@@ -1,6 +1,115 @@
 {
   "rules": {
     ".read": false,
-    ".write": false
+    ".write": false,
+    "hosts": {
+      "$uid": {
+        ".read": "auth != null && auth.uid === $uid"
+      }
+    },
+    "libraries": {
+      "$uid": {
+        ".read": "auth != null && root.child('hosts').child(auth.uid).val() === true && auth.uid === $uid",
+        ".write": "auth != null && root.child('hosts').child(auth.uid).val() === true && auth.uid === $uid"
+      }
+    },
+    "rooms": {
+      "$code": {
+        ".read": "auth != null && root.child('hosts').child(auth.uid).val() === true && (!data.exists() || data.child('hostUid').val() === auth.uid)",
+        ".write": "auth != null && root.child('hosts').child(auth.uid).val() === true && ((!data.exists() && newData.child('hostUid').val() === auth.uid) || data.child('hostUid').val() === auth.uid)",
+        ".validate": "$code.matches(/^[A-HJ-NP-Z2-9]{6}$/) && newData.hasChildren(['hostUid','public']) && (!data.exists() || newData.child('hostUid').val() === data.child('hostUid').val())",
+        "hostUid": {
+          ".validate": "newData.isString()"
+        },
+        "public": {
+          ".read": "auth != null",
+          ".validate": "newData.hasChildren(['title','phase','status','run','teams','deadline','remaining']) && newData.child('phase').isNumber() && newData.child('phase').val() >= 0 && newData.child('phase').val() <= 4 && newData.child('run').isNumber() && newData.child('run').val() >= 1",
+          "teams": {
+            ".validate": "newData.hasChildren(['t1','t2'])",
+            "$team": {
+              "progress": {
+                "$phase": {
+                  ".write": "auth != null && root.child('rooms').child($code).child('members').child(auth.uid).child('teamId').val() === $team && root.child('rooms').child($code).child('public/teams').child($team).child('captain').val() === auth.uid && root.child('rooms').child($code).child('public/status').val() === 'running' && $phase === root.child('rooms').child($code).child('public/phase').val() + '' && now <= root.child('rooms').child($code).child('public/deadline').val()",
+                  ".validate": "newData.val() === true && newData.parent().parent().parent().parent().parent().child('teams').child($team).child('submissions').child($phase).exists()"
+                }
+              },
+              ".validate": "$team.matches(/^t([1-9]|10)$/)"
+            }
+          }
+        },
+        "members": {
+          "$uid": {
+            ".read": "auth != null && auth.uid === $uid",
+            ".validate": "newData.hasChildren(['name','teamId']) && newData.child('name').isString() && newData.child('teamId').isString()"
+          }
+        },
+        "joinRequests": {
+          "$uid": {
+            ".read": "auth != null && auth.uid === $uid",
+            ".write": "auth != null && auth.uid === $uid && root.child('rooms').child($code).child('public/status').val() === 'lobby' && !root.child('rooms').child($code).child('members').child(auth.uid).exists()",
+            ".validate": "newData.hasChildren(['name'])",
+            "name": {
+              ".validate": "newData.isString() && newData.val().length > 0 && newData.val().length <= 40"
+            },
+            "$other": {
+              ".validate": false
+            }
+          }
+        },
+        "personal": {
+          "$uid": {
+            ".read": "auth != null && auth.uid === $uid && root.child('rooms').child($code).child('members').child(auth.uid).exists()",
+            ".write": "auth != null && auth.uid === $uid && root.child('rooms').child($code).child('members').child(auth.uid).exists()",
+            ".validate": "newData.isString() && newData.val().length <= 8000"
+          }
+        },
+        "presence": {
+          "$team": {
+            ".read": "auth != null && root.child('rooms').child($code).child('members').child(auth.uid).child('teamId').val() === $team",
+            "$uid": {
+              ".write": "auth != null && root.child('rooms').child($code).child('members').child(auth.uid).child('teamId').val() === $team && auth.uid === $uid",
+              ".validate": "newData.val() === true"
+            }
+          }
+        },
+        "teams": {
+          "$team": {
+            ".read": "auth != null && root.child('rooms').child($code).child('members').child(auth.uid).child('teamId').val() === $team",
+            "notebook": {
+              ".write": "auth != null && root.child('rooms').child($code).child('members').child(auth.uid).child('teamId').val() === $team && newData.exists()",
+              ".validate": "newData.hasChildren(['text','revision']) && newData.child('text').isString() && newData.child('text').val().length <= 8000 && newData.child('revision').isNumber() && ((!data.exists() && newData.child('revision').val() === 1) || newData.child('revision').val() === data.child('revision').val() + 1)",
+              "text": {},
+              "revision": {},
+              "$other": {
+                ".validate": false
+              }
+            },
+            "submissions": {
+              "$phase": {
+                ".write": "auth != null && root.child('rooms').child($code).child('members').child(auth.uid).child('teamId').val() === $team && root.child('rooms').child($code).child('public/teams').child($team).child('captain').val() === auth.uid && root.child('rooms').child($code).child('public/status').val() === 'running' && $phase === root.child('rooms').child($code).child('public/phase').val() + '' && now <= root.child('rooms').child($code).child('public/deadline').val() && newData.exists()",
+                ".validate": "newData.hasChildren(['answers','explanation','run','submittedAt']) && newData.child('run').val() === root.child('rooms').child($code).child('public/run').val()",
+                "answers": {
+                  "$answer": {
+                    ".validate": "newData.isString() && newData.val().length <= 1000"
+                  }
+                },
+                "explanation": {
+                  ".validate": "newData.isString() && newData.val().length <= 4000"
+                },
+                "run": {
+                  ".validate": "newData.isNumber()"
+                },
+                "submittedAt": {
+                  ".validate": "newData.isNumber() && newData.val() <= now + 5000 && newData.val() >= now - 60000"
+                },
+                "$other": {
+                  ".validate": false
+                }
+              }
+            }
+          }
+        }
+      }
+    }
   }
 }
